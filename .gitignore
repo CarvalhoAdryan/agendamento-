@@ -1,0 +1,88 @@
+## .NET Core / ASP.NET Core
+bin/
+obj/
+out/
+
+## Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+## NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+
+## Rider
+.idea/
+*.sln.iml
+
+## User-specific files
+appsettings.Development.json
+appsettings.Local.json
+*.env
+.env
+
+## Secrets
+secrets.json
+**/appsettings.*.json
+!**/appsettings.json
+!**/appsettings.Production.json
+
+## EF Core
+**/Migrations/*.Designer.cs.bak
+
+## Logs
+*.log
+logs/
+
+## OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+## Test results
+[Tt]est[Rr]esult*/
+[Cc]overage*/
+*.trx
+*.coverage
+*.coveragexml
+
+## Publish
+**/Properties/PublishProfiles/*.pubxml
+**/Properties/PublishProfiles/*.pubxml.user
+publish/
+
+## Node (caso use pra frontend depois)
+node_modules/
+npm-debug.log*
+
+## Misc
+*.tmp
+*.temp
+*.bak
+*.swp
