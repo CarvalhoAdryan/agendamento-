@@ -17,4 +17,9 @@ public class ClienteService
     {
         return await _context.Clientes.ToListAsync();
     }
+
+    public async Task<Cliente?> BuscarPorIdAsync(int id)
+    {
+        return await _context.Clientes.FindAsync(id);
+    }
 }
