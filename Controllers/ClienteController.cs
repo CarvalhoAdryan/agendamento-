@@ -32,4 +32,12 @@ public class ClienteController : ControllerBase
         
         return Ok(cliente);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Criar([FromBody] ClienteCreateDTO dto)
+    {
+        var clientecriado = await _service.CriarAsync(dto);
+
+        return CreatedAtAction(nameof(BuscarPorId), new { id = clientecriado.Id }, clientecriado);
+    }
 }
