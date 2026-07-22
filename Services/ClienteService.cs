@@ -13,17 +13,39 @@ public class ClienteService
         _context = context;
     }
 
-    public async Task<List<Cliente>> ListarTodosAsync()
+    public async Task<List<ClienteResponseDto>> ListarTodosAsync()
     {
-        return await _context.Clientes.ToListAsync();
+        var cliente =  await _context.Clientes.ToListAsync();
+
+        return cliente.Select(c => new ClienteResponseDto
+        {
+            Id = c.Id,
+            Nome = c.Nome,
+            Email = c.Email,
+            Telefone = c.Telefone,
+            CriadoEm = c.CriadoEm
+        }).ToList();
+
+
     }
 
-    public async Task<Cliente?> BuscarPorIdAsync(int id)
+    public async Task<ClienteResponseDto?> BuscarPorIdAsync(int id)
     {
-        return await _context.Clientes.FindAsync(id);
+        var cliente = await _context.Clientes.FindAsync(id);
+
+        if (cliente == null) return null;
+
+        return new ClienteResponseDto
+        {
+          Id = cliente.Id,
+          Nome = cliente.Nome,
+          Email = cliente.Email,
+          Telefone = cliente.Telefone,
+          CriadoEm = cliente.CriadoEm
+        };
     }
 
-    public async Task<Cliente> CriarAsync(ClienteCreateDTO dto)
+    public async Task<ClienteResponseDto> CriarAsync(ClienteCreateDTO dto)
     {
         var cliente = new Cliente
         {
@@ -35,6 +57,13 @@ public class ClienteService
         await _context.Clientes.AddAsync(cliente);
         await _context.SaveChangesAsync();
 
-        return cliente;
+        return new ClienteResponseDto
+        {
+            Id = cliente.Id,
+            Nome = cliente.Nome,
+            Email = cliente.Email,
+            Telefone = cliente.Telefone,
+            CriadoEm = cliente.CriadoEm
+        };
     }
 }
