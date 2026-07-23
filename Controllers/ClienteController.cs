@@ -40,4 +40,15 @@ public class ClienteController : ControllerBase
 
         return CreatedAtAction(nameof(BuscarPorId), new { id = clientecriado.Id }, clientecriado);
     }
+
+    [HttpPut("{Id}")]
+    public async Task<IActionResult> Atualizar(int Id, [FromBody] ClienteUpdateDto dto)
+    {
+        var clienteAtualizado = await _service.AtualizarAsync(Id, dto);
+
+        if (clienteAtualizado == null)
+            return NotFound($"Cliente de id {Id} não localizado!");
+
+        return Ok(clienteAtualizado);
+    }
 }
