@@ -51,4 +51,15 @@ public class ClienteController : ControllerBase
 
         return Ok(clienteAtualizado);
     }
+
+    [HttpDelete]
+    public async Task<IActionResult> Remover(int Id)
+    {
+        var Removido = await _service.RemoverAsync(Id);
+
+        if(!Removido)
+            return NotFound($"Não foi possivel encontrar o cliente com id {Id}!");
+
+        return NoContent();
+    }
 }

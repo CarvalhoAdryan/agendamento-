@@ -89,4 +89,16 @@ public class ClienteService
             CriadoEm = cliente.CriadoEm
         };
     }
+
+    public async Task<bool> RemoverAsync(int Id)
+    {
+        var cliente = await _context.Clientes.FindAsync(Id);
+
+        if (cliente == null) return false;
+
+        _context.Clientes.Remove(cliente);
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
 }
