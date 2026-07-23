@@ -65,5 +65,28 @@ public class ClienteService
             Telefone = cliente.Telefone,
             CriadoEm = cliente.CriadoEm
         };
+    
+    }
+
+    public async Task<ClienteResponseDto?> AtualizarAsync(int Id, ClienteUpdateDto dto)
+    {
+        var cliente = await _context.Clientes.FindAsync(Id);
+
+        if (cliente == null) return null;
+
+        cliente.Nome = dto.Nome;
+        cliente.Email = dto.Email;
+        cliente.Telefone = dto.Telefone;
+
+        await _context.SaveChangesAsync();
+
+        return new ClienteResponseDto
+        {
+            Id = cliente.Id,
+            Nome = cliente.Nome,
+            Email = cliente.Email,
+            Telefone = cliente.Telefone,
+            CriadoEm = cliente.CriadoEm
+        };
     }
 }
