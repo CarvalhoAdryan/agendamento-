@@ -44,6 +44,6 @@ public class VeiculoController : ControllerBase
         if(veiculoCriado == null){
             return BadRequest($"Cliente com Id {dto.ClienteId} não encontrado. Não foi possivel criar o veiculo!");
         }
-        return CreatedAtAction(nameof(BuscarVeiculoPorId), new {id = veiculoCriado.Id }, veiculoCriado);
+        return CreatedAtAction(nameof(BuscarVeiculoPorId), new {id = veiculoCriado.ClienteId }, veiculoCriado);
     }
 }

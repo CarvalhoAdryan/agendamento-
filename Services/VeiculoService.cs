@@ -47,7 +47,7 @@ public class VeiculoService
 
     public async Task<VeiculoResponseDto?> CriarVeiculoAsync(VeiculoCreateDto dto)
     {
-        var clienteExiste = await _context.Clientes.AnyAsync(c => c.Id == dto.Id);
+        var clienteExiste = await _context.Clientes.AnyAsync(c => c.Id == dto.ClienteId);
 
         if (!clienteExiste) return null; 
 
