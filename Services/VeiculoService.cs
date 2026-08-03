@@ -17,13 +17,14 @@ public class VeiculoService
     {
         var veiculos = await _context.Veiculos.ToListAsync();
 
-        return veiculos.Select(c => new VeiculoResponseDto
-        {
-            Modelo = c.Modelo,
-            Marca = c.Marca,
-            Placa = c.Placa,
-            Ano = c.Ano,
-            ClienteId = c.ClienteId
+        return veiculos.Select(v => new VeiculoResponseDto
+        {   
+            Id = v.Id,
+            Modelo = v.Modelo,
+            Marca = v.Marca,
+            Placa = v.Placa,
+            Ano = v.Ano,
+            ClienteId = v.ClienteId
         }).ToList();
     }
 
@@ -35,6 +36,7 @@ public class VeiculoService
 
         return new VeiculoResponseDto
         {
+            Id = veiculo.Id,
             Modelo = veiculo.Modelo,
             Marca = veiculo.Marca,
             Placa = veiculo.Placa,
@@ -43,8 +45,69 @@ public class VeiculoService
         };
     }
 
-    public async Task<VeiculoCreateDto> CriarVeiculoAsync(VeiculoCreateDto dto)
+    public async Task<VeiculoResponseDto?> CriarVeiculoAsync(VeiculoCreateDto dto)
     {
+        var clienteExiste = await _context.Clientes.AnyAsync(c => c.Id == dto.Id);
+
+        if (!clienteExiste) return null; 
+
+        var veiculo = new Veiculo
+        {
+            Modelo = dto.Modelo,
+            Marca = dto.Marca,
+            Placa = dto.Placa,
+            Ano = dto.Ano,
+            ClienteId = dto.ClienteId
+        };
+
+        await _context.Veiculos.AddAsync(veiculo);
+        await _context.SaveChangesAsync();
+
+        return new VeiculoResponseDto
+        {
+            Id = veiculo.Id,
+            Modelo = veiculo.Modelo,
+            Marca = veiculo.Marca,
+            Placa = veiculo.Placa,
+            Ano = veiculo.Ano,
+            ClienteId = veiculo.ClienteId
+        };
+    }
+
+    public async Task<VeiculoResponseDto?> AtualizarVeiculoAsync(int Id, VeiculoUpdateDto dto)
+    {
+        var veiculo = await _context.Veiculos.FindAsync(Id);
+
+        if(veiculo == null) return null;
+
+        veiculo.Modelo = dto.Modelo;
+        veiculo.Marca = dto.Marca;
+        veiculo.Placa = dto.Placa;
+        veiculo.Ano = dto.Ano;
+
+        await _context.SaveChangesAsync();
+
+        return new VeiculoResponseDto
+        {
+            Id = veiculo.Id,
+            Modelo = veiculo.Modelo,
+            Marca = veiculo.Marca,
+            Placa = veiculo.Placa,
+            Ano = veiculo.Ano,
+            ClienteId = veiculo.ClienteId
+        };
+
+    }
+
+    public async Task<bool> RemoverVeiculoAsync(int Id)
+    {
+        var veiculo = await _context.Veiculos.FindAsync(Id);
         
+        if(veiculo == null) return false;
+
+        _context.Veiculos.Remove(veiculo);
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 }

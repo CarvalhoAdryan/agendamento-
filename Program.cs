@@ -15,6 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<ClienteService>();
+builder.Services.AddScoped<VeiculoService>();
 
 var app = builder.Build();
 
@@ -27,7 +28,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 app.MapControllers();
-
 
 
 app.Run();
